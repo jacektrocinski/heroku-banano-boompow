@@ -26,6 +26,11 @@ timeout %start_delay_seconds%
 
 echo.
 echo Starting BoomPow Client...
+if %async_mode% == "" (
+python bpow_client.py --payout %payout_address% --work %desired_work_type%
+) else (
+echo Async mode enabled - submitting work to work_server asynchronously.
 python bpow_client.py --payout %payout_address% --work %desired_work_type% %async_mode%
+)
 
 pause
