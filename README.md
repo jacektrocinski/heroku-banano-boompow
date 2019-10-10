@@ -39,3 +39,37 @@ You need to find out what your GPU vendor/device numbers are if you're going to 
 
 1. Edit the file `run_windows.bat` with your desired configuration (including the work-server GPU config).
 2. Double-click the same file, which should eventually open two terminals. You must leave them running in the foreground. You can minimize but not close them (sorry!).
+
+### macOS
+
+1. Install Rust if you don't already have it:
+   ```bash
+   curl https://sh.rustup.rs -sSf | sh
+   ```
+2. Configure your current shell:
+   ```bash
+   source $HOME/.cargo/env
+   ```
+3. Compile the nano-work-server:
+   ```bash
+   git clone https://github.com/nanocurrency/nano-work-server.git
+   cd nano-work-server
+   cargo build --release
+   ```
+4. Overwrite the `nano-work-server` you downloaded from BoomPow with the one you just compliled. You can drag the binary file from here:
+   ```
+   nano-work-server/target/release/nano-work-server
+   ```
+   and drop it in the BoomPow directory you downloaded from the [latest version](https://github.com/bbedward/boompow/releases) above:
+   ```
+   bpow-client/bin/linux/nano-work-server
+   ```
+5. Check `./bin/linux/nano-work-server --help` for information on how to select your GPU (or CPU).
+6. Run the work server:
+   ```bash
+   ./bin/linux/nano-work-server --gpu 0:0 -l 127.0.0.1:7000
+   ```
+6. Open Terminal and run the client:
+   ```bash
+   python3 bpow_client.py --payout YOUR_BANANO_ADDRESS --work {ondemand,precache,any}
+   ```
