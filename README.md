@@ -56,7 +56,7 @@ You need to find out what your GPU vendor/device numbers are if you're going to 
    cd nano-work-server
    cargo build --release
    ```
-4. Overwrite the `nano-work-server` you downloaded from BoomPow with the one you just compliled. You can drag the binary file from here:
+4. Overwrite the `nano-work-server` you downloaded from BoomPow with the one you just compiled. You can drag the binary file from here:
    ```
    nano-work-server/target/release/nano-work-server
    ```
