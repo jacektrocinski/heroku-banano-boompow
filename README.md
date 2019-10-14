@@ -10,8 +10,10 @@ These steps will guide you on how to setup a new work client. The nano-work-serv
 
 ### Installation
 
-- Download the [latest version](https://github.com/bbedward/boompow/releases) and extract.
-- Open a console under `bpow-client`. On Windows, shift + right-click and "Open Powershell window here".
+- Download the [latest version](https://github.com/bbedward/boompow/releases) and extract it.
+- On Linux, open a terminal and cd to the bpow-client directory.
+- On Windows, shift + right-click in the bpow-client directory and click  "Open Powershell window here".
+- On MacOS, in Finder right click on the bpow-client directory and click "New Terminal at bpow-client"
 - `pip3 install --user -r requirements.txt`
 
 ## Running
@@ -40,36 +42,15 @@ You need to find out what your GPU vendor/device numbers are if you're going to 
 1. Edit the file `run_windows.bat` with your desired configuration (including the work-server GPU config).
 2. Double-click the same file, which should eventually open two terminals. You must leave them running in the foreground. You can minimize but not close them (sorry!).
 
-### macOS
+### MacOS
 
-1. Install Rust if you don't already have it:
+1. Check `./bin/macos/nano-work-server --help` for information on how to select your GPU (or CPU).
+2. Run the work server:
    ```bash
-   curl https://sh.rustup.rs -sSf | sh
+   ./bin/macos/nano-work-server --gpu 0:0 -l 127.0.0.1:7000
    ```
-2. Configure your current shell:
-   ```bash
-   source $HOME/.cargo/env
-   ```
-3. Compile the nano-work-server:
-   ```bash
-   git clone https://github.com/nanocurrency/nano-work-server.git
-   cd nano-work-server
-   cargo build --release
-   ```
-4. Overwrite the `nano-work-server` you downloaded from BoomPow with the one you just compiled. You can drag the binary file from here:
-   ```
-   nano-work-server/target/release/nano-work-server
-   ```
-   and drop it in the BoomPow directory you downloaded from the [latest version](https://github.com/bbedward/boompow/releases) above:
-   ```
-   bpow-client/bin/linux/nano-work-server
-   ```
-5. Check `./bin/linux/nano-work-server --help` for information on how to select your GPU (or CPU).
-6. Run the work server:
-   ```bash
-   ./bin/linux/nano-work-server --gpu 0:0 -l 127.0.0.1:7000
-   ```
-6. Open Terminal and run the client:
+3. Press ⌘+T to open a new tab
+4. Run the client:
    ```bash
    python3 bpow_client.py --payout YOUR_BANANO_ADDRESS --work {ondemand,precache,any}
    ```
