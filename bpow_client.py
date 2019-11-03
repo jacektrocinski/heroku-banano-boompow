@@ -92,7 +92,6 @@ class BpowClient(object):
 
     def format_stat_message(self, block_rewarded: str, total_work_accepted: int, ondemand: int, precache: int, paid_units: int, paid_amount: float, percent_of_total: float):
         paid_amount = math.floor(paid_amount*100)/100
-        paid_pending = math.floor(paid_pending*100)/100
         return f"""Block Rewarded: {block_rewarded}
 ---------------------
 BoomPow Stats Update:
@@ -101,7 +100,7 @@ Overall {total_work_accepted} of your work units have been accepted by BoomPow (
 
 You have been paid for {paid_units} of those work units and have received {paid_amount} BANANO so far.
 
-You are currently set to receive {percent_of_total}% of the next prize pool
+You're currently eligible for {percent_of_total}% of the next prize pool.
 
 - TO EXIT: Press CTRL+C
 ---"""
@@ -117,7 +116,7 @@ You are currently set to receive {percent_of_total}% of the next prize pool
             total_paid = float(stats['total_paid']) if 'total_paid' in stats else 0.0
             percent_of_total = stats['percent_of_total'] if 'percent_of_total' in stats else 0.0
             if percent_of_total is None:
-                percent_of_total = -1
+                percent_of_total = 0
             else:
                 percent_of_total = round(float(percent_of_total) * 100.0, 2)
             #payment_factor = float(stats['payment_factor']) if 'payment_factor' in stats else 0.0
