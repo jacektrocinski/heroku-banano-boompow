@@ -37,7 +37,7 @@ class WorkQueue(asyncio.Queue):
 
 
 class WorkHandler(object):
-    def __init__(self, worker_uri, mqtt_client, callback, error_callback, async_mode, logger=logging):
+    def __init__(self, worker_uri, mqtt_client, callback, error_callback, async_mode, logger=logging, limit_logging=False):
         self.mqtt_client = mqtt_client
         self.callback = callback
         self.error_callback = error_callback
@@ -48,6 +48,7 @@ class WorkHandler(object):
         self.session = None
         self.logger = logger
         self.async_mode = async_mode
+        self.limit_logging = limit_logging
 
     async def start(self):
         self.session = aiohttp.ClientSession(conn_timeout=1)
@@ -65,12 +66,14 @@ class WorkHandler(object):
         # First check work queue (75% chance probability), then priority
         try:
             difficulty, work_type = self.work_queue.pop(block_hash)
-            self.logger.info(f"REMOVED {work_type}/{block_hash[:10]}")
+            if not self.limit_logging:
+                self.logger.info(f"REMOVED {work_type}/{block_hash[:10]}")
             return
         except KeyError:
             try:
                 difficulty, work_type = self.priority_queue.pop(block_hash)
-                self.logger.info(f"PRIORITY REMOVED {work_type}/{block_hash[:10]}")
+                if not self.limit_logging:
+                    self.logger.info(f"PRIORITY REMOVED {work_type}/{block_hash[:10]}")
                 return
             except KeyError:
                 pass
@@ -102,10 +105,12 @@ class WorkHandler(object):
             # If the work came from the priority topic, add to the priority queue.
             if priority:
                 await self.priority_queue.put(item)
-                self.logger.info(f"PRIORITY QUEUED {work_type}/{block_hash[:10]}")
+                if not self.limit_logging:
+                    self.logger.info(f"PRIORITY QUEUED {work_type}/{block_hash[:10]}")
             else:
                 await self.work_queue.put(item)
-                self.logger.info(f"QUEUED {work_type}/{block_hash[:10]}")
+                if not self.limit_logging:
+                    self.logger.info(f"QUEUED {work_type}/{block_hash[:10]}")
         except Exception as e:
             self.logger.error(f"Work handler queue_work error: {e}")
             if priority:
@@ -125,12 +130,14 @@ class WorkHandler(object):
             self.work_ongoing.remove(block_hash)
         except:
             # Removed by queue_cancel, no longer needed
-            self.logger.info(f"CANCEL {work_type}/{block_hash[:10]}...")
+            if not self.limit_logging:
+                self.logger.info(f"CANCEL {work_type}/{block_hash[:10]}...")
             return
         res_js = await res.json()
         if 'work' in res_js:                    
             await self.callback(self.mqtt_client, work_type, block_hash, res_js['work'])
-            self.logger.info(f"SENT {work_type}/{block_hash[:10]}")
+            if not self.limit_logging:
+                self.logger.info(f"SENT {work_type}/{block_hash[:10]}")
         else:
             error = res_js.get('error', None)
             if error:
@@ -143,10 +150,12 @@ class WorkHandler(object):
                 # Fetch from priority queue first
                 try:
                     block_hash, (difficulty, work_type) = self.priority_queue.get_nowait()
-                    self.logger.info(f"PRIO-WORK {work_type}/{block_hash[:10]}...")
+                    if not self.limit_logging:
+                        self.logger.info(f"PRIO-WORK {work_type}/{block_hash[:10]}...")
                 except asyncio.QueueEmpty:
                     block_hash, (difficulty, work_type) = self.work_queue.get_nowait()
-                    self.logger.info(f"WORK {work_type}/{block_hash[:10]}...")
+                    if not self.limit_logging:
+                        self.logger.info(f"WORK {work_type}/{block_hash[:10]}...")
 
                 if self.async_mode:
                     asyncio.ensure_future(self.process_queue_item(block_hash, difficulty, work_type))

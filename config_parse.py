@@ -19,6 +19,7 @@ class BpowClientConfig(object):
         parser.add_argument('--payout', type=banano_public_address, required=True, help='Payout address.')
         parser.add_argument('--work', type=str, action='store', choices=WORK_TYPES, default="any", help='Desired work type. Options: any (default), ondemand, precache.')
         parser.add_argument('--async_mode', action='store_true', help='Request work without waiting for any results from the worker, may increase performance at the expense of using more system resources', default=False)
+        parser.add_argument('--limit-logging', action='store_true', help='Log less information, keep console spam down', default=False)
 
         args = parser.parse_args()
 
@@ -27,3 +28,4 @@ class BpowClientConfig(object):
         self.payout = args.payout
         self.work_type = args.work
         self.async_mode = args.async_mode
+        self.limit_logging = args.limit_logging

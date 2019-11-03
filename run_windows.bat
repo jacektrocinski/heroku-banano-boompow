@@ -16,6 +16,10 @@ set desired_work_type="any"
 :: set async_mode=%true%
 set async_mode=%false%
 
+:: Limit logging
+:: Will only log stats updates, instead of all queue-related information
+set limit_logging=%false%
+
 :: Optional delay before starting a BoomPow client
 set start_delay_seconds=3
 
@@ -31,9 +35,17 @@ timeout %start_delay_seconds%
 echo.
 echo Starting BoomPow Client...
 if %async_mode% (
-python bpow_client.py --payout %payout_address% --work %desired_work_type% --async_mode
+    if %limit_logging% (
+        python bpow_client.py --payout %payout_address% --work %desired_work_type% --async_mode --limit-logging
+    ) else {
+        python bpow_client.py --payout %payout_address% --work %desired_work_type% --async_mode
+    }
 ) else (
-python bpow_client.py --payout %payout_address% --work %desired_work_type%
+    if %limit_logging% (
+        python bpow_client.py --payout %payout_address% --work %desired_work_type% --limit-logging
+    ) else (
+        python bpow_client.py --payout %payout_address% --work %desired_work_type%
+    )
 )
 
 pause

@@ -53,7 +53,7 @@ class BpowClient(object):
                 "default_qos": 0
             }
         )
-        self.work_handler = WorkHandler(config.worker, self.client, send_work_result, work_server_error_callback, config.async_mode, logger=logger)
+        self.work_handler = WorkHandler(config.worker, self.client, send_work_result, work_server_error_callback, config.async_mode, logger=logger, limit_logging=config.limit_logging)
         self.priority = {}
         self.running = False
         self.server_online = False
