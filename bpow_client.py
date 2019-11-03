@@ -90,7 +90,7 @@ class BpowClient(object):
         else:
             logger.warn(f"Invalid hash {block_hash}")
 
-    def format_stat_message(self, block_rewarded: str, total_work_accepted: int, ondemand: int, precache: int, paid_units: int, paid_amount: float, paid_pending: float):
+    def format_stat_message(self, block_rewarded: str, total_work_accepted: int, ondemand: int, precache: int, paid_units: int, paid_amount: float, percent_of_total: float):
         paid_amount = math.floor(paid_amount*100)/100
         paid_pending = math.floor(paid_pending*100)/100
         return f"""Block Rewarded: {block_rewarded}
@@ -101,7 +101,7 @@ Overall {total_work_accepted} of your work units have been accepted by BoomPow (
 
 You have been paid for {paid_units} of those work units and have received {paid_amount} BANANO so far.
 
-So far you've earned {paid_pending} BANANO towards your next reward
+You are currently set to receive {percent_of_total}% of the next prize pool
 
 - TO EXIT: Press CTRL+C
 ---"""
@@ -115,10 +115,15 @@ So far you've earned {paid_pending} BANANO towards your next reward
             total_work = ondemand + precache
             total_credited = int(stats['total_credited']) if 'total_credited' in stats else 0
             total_paid = float(stats['total_paid']) if 'total_paid' in stats else 0.0
-            payment_factor = float(stats['payment_factor']) if 'payment_factor' in stats else 0.0
+            percent_of_total = stats['percent_of_total'] if 'percent_of_total' in stats else 0.0
+            if percent_of_total is None:
+                percent_of_total = -1
+            else:
+                percent_of_total = round(float(percent_of_total) * 100.0, 2)
+            #payment_factor = float(stats['payment_factor']) if 'payment_factor' in stats else 0.0
             # Figure out estimated payout
-            estimated_payout = (total_work - total_credited) * payment_factor
-            logger.info(self.format_stat_message(stats['block_rewarded'], total_work, ondemand, precache, total_credited, total_paid, estimated_payout))
+            #estimated_payout = (total_work - total_credited) * payment_factor
+            logger.info(self.format_stat_message(stats['block_rewarded'], total_work, ondemand, precache, total_credited, total_paid, percent_of_total))
         except Exception as e:
             logger.warn(f"Could not parse stats message {message}:\n{e}")
 
