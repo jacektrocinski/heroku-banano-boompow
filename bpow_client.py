@@ -118,7 +118,7 @@ You're currently eligible for {percent_of_total}% of the next prize pool.
             if percent_of_total is None:
                 percent_of_total = 0
             else:
-                percent_of_total = round(float(percent_of_total) * 100.0, 2)
+                percent_of_total = round(float(percent_of_total) * 100.0, 4)
             #payment_factor = float(stats['payment_factor']) if 'payment_factor' in stats else 0.0
             # Figure out estimated payout
             #estimated_payout = (total_work - total_credited) * payment_factor
