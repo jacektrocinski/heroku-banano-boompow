@@ -143,7 +143,6 @@ class WorkHandler(object):
             if error:
                 self.logger.error(f"Unexpected reply from work server: {error}")
 
-    @asyncio.coroutine
     async def loop(self):
         while 1:
             try:
