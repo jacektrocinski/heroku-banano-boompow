@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python3.8
 from config_parse import BpowClientConfig
 config = BpowClientConfig()
 
@@ -93,6 +93,37 @@ class BpowClient(object):
     def format_stat_message(self, block_rewarded: str, total_work_accepted: int, ondemand: int, precache: int, paid_units: int, paid_amount: float, percent_of_total: float):
         paid_amount = math.floor(paid_amount*100)/100
         return f"""Block Rewarded: {block_rewarded}
+                         ___
+                     .-'`     `'.
+              __    /  .-. .-.   |
+           .'`__`'.| /  ()|  ()\  |
+          / /`   `\\ |_ .-.-. _|  ;  __
+          ||     .-'`  (/`|`\) `-./'`__`'.
+          \ \. .'                 `.`  `\ |
+           `-./  _______            \    ||
+              | |\      ''''---.__   |_./ /
+              ' \ `'---..________/|  /.-'`
+               `.`._            _/  /
+                 `-._'-._____.-' _.`
+                  _,-''.__...--'`
+              _.-'_.    ,-. _ `'-._
+           .-' ,-' /   /   \\`'-._ `'.
+         <`  ,'   /   /     \\    / /
+          `.  \  ;   ;       ;'  / /_
+    __   (`\`. \ |   |       ||.' // )
+ .'`_ `\(`'.`.\_\|   |    o  |/_,'/.' )
+/ .' `; |`-._ ` /;    \     / |   _.-'
+| |  (_/  (_..-' _|    `'--' | `-.._)
+; |        _.'_.' / /'.___.; |
+ | '-.__.-'_.'   ; '        | |
+  `-.,__.-'      | ;         ; '
+                 | |         | |
+                 | |         / /
+               .-' '.      ,' `-._
+             /`    _ `.   /  _    `.
+            '-/ / / `\_) (_/` \  .`,)
+             | || |            | | |
+             `-'\_'            (_/-'
 ---------------------
 BoomPow Stats Update:
 ---------------------
@@ -103,6 +134,8 @@ You have been paid for {paid_units} of those work units and have received {paid_
 You're currently eligible for {percent_of_total}% of the next prize pool.
 
 - TO EXIT: Press CTRL+C
+
+
 ---"""
         
 
