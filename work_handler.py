@@ -146,22 +146,22 @@ class WorkHandler(object):
     async def loop(self):
         while 1:
             try:
-                # Fetch from priority queue first
-                try:
-                    block_hash, (difficulty, work_type) = self.priority_queue.get_nowait()
-                    if not self.limit_logging:
-                        self.logger.info(f"PRIO-WORK {work_type}/{block_hash[:10]}...")
-                except asyncio.QueueEmpty:
-                    block_hash, (difficulty, work_type) = self.work_queue.get_nowait()
+                awaitables = [self.priority_queue.get(), self.work_queue.get()]
+                # wait for at least one task to be done.
+                done, pending = await asyncio.wait(awaitables, return_when=asyncio.FIRST_COMPLETED)
+                # cancel pending tasks
+                for task in pending:
+                    task.cancel()
+                # work on done tasks
+                for task in done:
+                    block_hash, (difficulty, work_type) = task.result()
                     if not self.limit_logging:
                         self.logger.info(f"WORK {work_type}/{block_hash[:10]}...")
 
-                if self.async_mode:
-                    asyncio.ensure_future(self.process_queue_item(block_hash, difficulty, work_type))
-                else:
-                    await self.process_queue_item(block_hash, difficulty, work_type)
-            except asyncio.QueueEmpty:
-                await asyncio.sleep(1)
+                    if self.async_mode:
+                        asyncio.ensure_future(self.process_queue_item(block_hash, difficulty, work_type))
+                    else:
+                        await self.process_queue_item(block_hash, difficulty, work_type)
             except Exception as e:
                 self.logger.error(f"Work handler loop error: {e}")
                 await asyncio.sleep(5)
