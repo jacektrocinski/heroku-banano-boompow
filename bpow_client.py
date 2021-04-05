@@ -7,8 +7,8 @@ import json
 import asyncio
 import math
 from time import time
-from hbmqtt.client import MQTTClient, ClientException, ConnectException
-from hbmqtt.mqtt.constants import QOS_0, QOS_1, QOS_2
+from amqtt.client import MQTTClient, ClientException, ConnectException
+from amqtt.mqtt.constants import QOS_0, QOS_1, QOS_2
 
 from logger import get_logger
 from work_handler import WorkHandler
