@@ -27,7 +27,7 @@ heroku buildpacks:add --index 1 heroku-community/apt --app banano-boompow
 
 Replace `YOUR_BANANO_ADDRESS` in `start.sh` with your BAN address.
 
-Deploy the code.
+Deploy the app.
 
 ```shell
 git push heroku main
@@ -36,10 +36,10 @@ heroku ps:scale worker=1 --app banano-boompow
 
 ## Useful commands
 
-Run Bash inside a Heroku dyno.
+View recent logs.
 
 ```shell
-heroku run bash --app banano-boompow
+heroku logs --app banano-boompow
 ```
 
 Deploy from a branch besides `main`.
