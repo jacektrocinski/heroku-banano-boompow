@@ -22,10 +22,31 @@ Before continuing, make sure Heroku CLI is installed.
 ```shell
 heroku apps:create banano-boompow
 heroku buildpacks:add heroku/python --app banano-boompow
-heroku buildpacks:add heroku-community/apt --app banano-boompow
+heroku buildpacks:add --index 1 heroku-community/apt --app banano-boompow
 ```
 
 Replace `YOUR_BANANO_ADDRESS` in `start.sh` with your BAN address.
+
+Deploy the code.
+
+```shell
+git push heroku main
+heroku ps:scale worker=1 --app banano-boompow
+```
+
+## Useful commands
+
+Run Bash inside a Heroku dyno.
+
+```shell
+heroku run bash --app banano-boompow
+```
+
+Deploy from a branch besides `main`.
+
+```shell
+git push heroku dev:main
+```
 
 ### Installation
 
