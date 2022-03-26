@@ -25,7 +25,7 @@ heroku buildpacks:add heroku/python --app banano-boompow
 heroku buildpacks:add --index 1 heroku-community/apt --app banano-boompow
 ```
 
-Replace `YOUR_BANANO_ADDRESS` in `start.sh` with your BAN address.
+Replace `YOUR_BANANO_ADDRESS` in `start.sh` with your BAN address and commit the change.
 
 Deploy the app.
 
