@@ -48,32 +48,34 @@ Deploy from a branch besides `main`.
 git push heroku dev:main
 ```
 
-### Installation
+## Receiving upstream commits
 
-- Download the [latest version](https://github.com/bbedward/boompow/releases) and extract it.
-- On Linux, open a terminal and cd to the bpow-client directory.
-- On Windows, shift + right-click in the bpow-client directory and click "Open Powershell window here".
-- On MacOS, in Finder right click on the bpow-client directory and click "New Terminal at bpow-client"
-- `pip3 install --user -r requirements.txt`
+The git remote for `bpow-main` should be https://github.com/BananoCoin/boompow/tree/master/client
 
-### Linux
+Get the latest changes to BoomPoW:
 
-1. Install required library
-
-```bash
-sudo apt install ocl-icd-libopencl1
+```
+git checkout bpow-main
+git pull
 ```
 
-2. Check `./bin/linux/nano-work-server --help` for information on how to select your GPU (or CPU).
-3. Run the work server:
+Next, update `bpow-client` with the new filtered version of the commits.
 
-```bash
-./bin/linux/nano-work-server --gpu 0:0 -l 127.0.0.1:7000
+```shell
+git subtree split --client/ --onto bpow-client -b bpow-client
 ```
 
-4. Check the client configuration options with `python3 bpow_client.py --help`
-5. Run the client:
+With `bpow-client` now updated, you can update the `main` branch as you see fit (either by merging or rebasing).
 
-```bash
-python3 bpow_client.py --payout YOUR_BANANO_ADDRESS --work {ondemand,precache,any}
+```shell
+
 ```
+
+- `main` - Main branch.
+- `dev` - Development branch.
+-
+
+Sources
+
+1. https://stackoverflow.com/questions/24577084/forking-a-sub-directory-of-a-repository-on-github-and-making-it-part-of-my-own-r
+1. https://github.com/zh/banano-awesome/blob/master/assets/How-to-setup-bPoW-on-Heroku.md
