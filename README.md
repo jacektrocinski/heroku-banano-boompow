@@ -72,11 +72,7 @@ git checkout main
 git rebase bpow-client
 ```
 
-- `main` - Main branch.
-- `dev` - Development branch.
--
-
-Sources
+## Sources
 
 1. https://stackoverflow.com/questions/24577084/forking-a-sub-directory-of-a-repository-on-github-and-making-it-part-of-my-own-r
 1. https://github.com/zh/banano-awesome/blob/master/assets/How-to-setup-bPoW-on-Heroku.md
