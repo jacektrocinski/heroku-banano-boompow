@@ -50,7 +50,7 @@ git push heroku dev:main
 
 ## Receiving upstream commits
 
-The git remote for `bpow-main` should be https://github.com/BananoCoin/boompow/tree/master/client
+The git remote for `bpow-main` should be: https://github.com/BananoCoin/boompow/tree/master/client
 
 Get the latest changes to BoomPoW:
 
