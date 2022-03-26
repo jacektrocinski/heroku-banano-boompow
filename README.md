@@ -17,7 +17,7 @@ cd heroku-banano-boompow
 
 ## Deploy the app
 
-Before continuing, make sure Heroku CLI is installed.
+Before continuing, make sure [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli) is installed.
 
 ```shell
 heroku apps:create banano-boompow
@@ -68,7 +68,8 @@ git subtree split --client/ --onto bpow-client -b bpow-client
 With `bpow-client` now updated, you can update the `main` branch as you see fit (either by merging or rebasing).
 
 ```shell
-
+git checkout main
+git rebase bpow-client
 ```
 
 - `main` - Main branch.
