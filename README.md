@@ -20,7 +20,7 @@ cd heroku-banano-boompow
 Before continuing, make sure [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli) is installed.
 
 ```shell
-heroku apps:create banano-boompow
+heroku apps:create --region eu banano-boompow-eu
 heroku buildpacks:add heroku/python --app banano-boompow
 heroku buildpacks:add --index 1 heroku-community/apt --app banano-boompow
 ```
