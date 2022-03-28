@@ -11,8 +11,8 @@ Deploy BANANO's super official Proof of Work system (BoomPoW) on Heroku to earn 
 Clone this repository so that you have a local version of the code that you can then deploy to Heroku, execute the following commands in your local command shell or terminal:
 
 ```shell
-git clone https://github.com/jacektrocinski/heroku-banano-boompow.git
-cd heroku-banano-boompow
+git clone https://github.com/jacektrocinski/heroku-banano-boompow-eu.git
+cd heroku-banano-boompow-eu
 ```
 
 ## Deploy the app
@@ -20,9 +20,9 @@ cd heroku-banano-boompow
 Before continuing, make sure [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli) is installed.
 
 ```shell
-heroku apps:create --region eu banano-boompow-eu
-heroku buildpacks:add heroku/python --app banano-boompow
-heroku buildpacks:add --index 1 heroku-community/apt --app banano-boompow
+heroku apps:create --region eu banano-boompow-eu-eu
+heroku buildpacks:add heroku/python --app banano-boompow-eu
+heroku buildpacks:add --index 1 heroku-community/apt --app banano-boompow-eu
 ```
 
 Replace `YOUR_BANANO_ADDRESS` in `start.sh` with your BAN address and commit the change.
@@ -31,7 +31,7 @@ Deploy the app.
 
 ```shell
 git push heroku main
-heroku ps:scale worker=1 --app banano-boompow
+heroku ps:scale worker=1 --app banano-boompow-eu
 ```
 
 ## Useful commands
@@ -39,7 +39,7 @@ heroku ps:scale worker=1 --app banano-boompow
 View recent logs.
 
 ```shell
-heroku logs --app banano-boompow
+heroku logs --app banano-boompow-eu
 ```
 
 Deploy from a branch besides `main`.
