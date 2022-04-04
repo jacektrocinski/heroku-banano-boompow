@@ -2,6 +2,8 @@
 
 Deploy BANANO's super official Proof of Work system (BoomPoW) on Heroku to earn free BAN.
 
+⚠️ **WARNING**: Cryptocurrency mining is in violation of Heroku’s terms of use.
+
 ## Requirements
 
 1. A free [Heroku account](https://signup.heroku.com/signup/dc).
